@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const { error } = require("console");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 const port = 4500;
@@ -19,6 +19,7 @@ database.once("open", () =>
 );
 
 app.use(bodyParser.json());
+app.use("/user", userRoutes);
 app.get("/", (req, res) => {
   res.send("This is the home page");
 });
