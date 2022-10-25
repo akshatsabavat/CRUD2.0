@@ -1,8 +1,22 @@
+require("dotenv").config();
 const express = require("express");
+const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const { error } = require("console");
 
 const app = express();
 const port = 4500;
+
+mongoose.connect(process.env.DATABASE_CONNECTION_URL, {
+  useNewUrlParser: true,
+});
+const database = mongoose.connection;
+database.on("error", (error) => {
+  return console.log(error);
+});
+database.once("open", () =>
+  console.log(`$connected to ${process.env.DATABASE_CONNECTION_URL}`)
+);
 
 app.use(bodyParser.json());
 app.get("/", (req, res) => {
